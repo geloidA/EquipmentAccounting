@@ -31,5 +31,10 @@ namespace EquipmentAccounting.DataBase
         public virtual ICollection<Deliveries> Deliveries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distributions> Distributions { get; set; }
+
+        internal static void Clear()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

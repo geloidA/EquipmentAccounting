@@ -19,7 +19,7 @@ namespace EquipmentAccounting.DataBase
         public Nullable<int> EquipmentID { get; set; }
         public int Count { get; set; }
         public Nullable<int> SupplierID { get; set; }
-    
+
         public virtual Equipments Equipments { get; set; }
         public virtual Suppliers Suppliers { get; set; }
     }

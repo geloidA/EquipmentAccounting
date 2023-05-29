@@ -1,0 +1,28 @@
+﻿<Window x:Class="EquipmentAccounting.Views.DeliveryCreationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EquipmentAccounting.Views"
+        mc:Ignorable="d"
+        Title="DeliveryCreationWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Center">
+            <UniformGrid Columns="2" Margin="2" >
+                <TextBlock Text="Дата:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <DatePicker Width="200" />
+            </UniformGrid>
+            <UniformGrid Columns="2" Margin="2" >
+                <TextBlock Text="Поставщик:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <ComboBox Width="200"/>
+            </UniformGrid>
+        </StackPanel>
+        <DataGrid Grid.Row="1" Margin="5">
+            
+        </DataGrid>
+    </Grid>
+</Window>

@@ -11,19 +11,20 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="EquipmentID" Type="int" />
+          <Property Name="EquipmentID" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
-          <Property Name="SupplierID" Type="int" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Distributions">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EquipmentID" Type="int" />
+          <Property Name="EquipmentID" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserID" Type="int" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="EquipmentCount" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Equipments">
           <Key>
@@ -32,7 +33,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DeliveryDate" Type="datetime" Nullable="false" />
           <Property Name="CountInStock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
@@ -69,10 +69,10 @@
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="RoleID" Type="int" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Deliveries_Equipments">
-          <End Role="Equipments" Type="Self.Equipments" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipments">
@@ -84,7 +84,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Deliveries_Suppliers">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
@@ -96,7 +96,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Distributions_Equipments">
-          <End Role="Equipments" Type="Self.Equipments" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="1" />
           <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipments">
@@ -108,7 +108,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Distributions_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -120,7 +120,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
@@ -171,9 +171,9 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EquipmentID" Type="Int32" />
+          <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
-          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Equipments" Relationship="Self.FK_Deliveries_Equipments" FromRole="Deliveries" ToRole="Equipments" />
           <NavigationProperty Name="Suppliers" Relationship="Self.FK_Deliveries_Suppliers" FromRole="Deliveries" ToRole="Suppliers" />
         </EntityType>
@@ -182,10 +182,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EquipmentID" Type="Int32" />
+          <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="EquipmentCount" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Equipments" Relationship="Self.FK_Distributions_Equipments" FromRole="Distributions" ToRole="Equipments" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Distributions_Users" FromRole="Distributions" ToRole="Users" />
         </EntityType>
@@ -196,7 +197,6 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CountInStock" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Equipments" FromRole="Equipments" ToRole="Deliveries" />
           <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_Equipments" FromRole="Equipments" ToRole="Distributions" />
@@ -237,12 +237,12 @@
           <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RoleID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_Users" FromRole="Users" ToRole="Distributions" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
         </EntityType>
         <Association Name="FK_Deliveries_Equipments">
-          <End Role="Equipments" Type="Self.Equipments" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipments">
@@ -254,7 +254,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Deliveries_Suppliers">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
@@ -266,7 +266,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Distributions_Equipments">
-          <End Role="Equipments" Type="Self.Equipments" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="1" />
           <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipments">
@@ -278,7 +278,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Distributions_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -290,7 +290,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
@@ -355,6 +355,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="EquipmentCount" ColumnName="EquipmentCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -364,7 +365,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="CountInStock" ColumnName="CountInStock" />
               </MappingFragment>
             </EntityTypeMapping>

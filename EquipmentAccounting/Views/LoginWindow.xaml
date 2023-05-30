@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-        mc:Ignorable="d"
+        mc:Ignorable="d"        
+        WindowStartupLocation="CenterScreen"
         Title="LoginWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>

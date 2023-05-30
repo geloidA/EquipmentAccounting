@@ -20,6 +20,7 @@ namespace EquipmentAccounting.Views
             InitializeComponent();
             Deliveries = new ObservableCollection<Deliveries>(Entities.Context.Deliveries);
             dgDeliveries.ItemsSource = Deliveries;
+            DataContext = this;
         }
 
         private void SearchTxtBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -39,13 +40,13 @@ namespace EquipmentAccounting.Views
 
         private void BtnAddNewDelivery_Click(object sender, RoutedEventArgs e)
         {
-            var wnd = new DeliveryCreationWindow();
-            var result = wnd.ShowDialog();
+            var result = new DeliveryCreationWindow { Owner = this }.ShowDialog();
             if (result == true)
             {
-                Entities.Context.Deliveries.Add(wnd.CreatedDelivery);
-                Entities.Context.SaveChanges();
-                Deliveries.Add(wnd.CreatedDelivery);
+                Deliveries.Clear();
+                Deliveries.AddRange(Entities.Context.Deliveries);
+                var mainWnd = Owner as MainWindow;
+                mainWnd.UpdateEquipments();
             }
         }
     }

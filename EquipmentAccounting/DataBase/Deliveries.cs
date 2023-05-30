@@ -16,10 +16,10 @@ namespace EquipmentAccounting.DataBase
     {
         public int ID { get; set; }
         public System.DateTime Date { get; set; }
-        public Nullable<int> EquipmentID { get; set; }
+        public int EquipmentID { get; set; }
         public int Count { get; set; }
-        public Nullable<int> SupplierID { get; set; }
-
+        public int SupplierID { get; set; }
+    
         public virtual Equipments Equipments { get; set; }
         public virtual Suppliers Suppliers { get; set; }
     }

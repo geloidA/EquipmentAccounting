@@ -41,14 +41,19 @@ namespace EquipmentAccounting.Views
             Owner.Show();
         }
 
-        private void BtnShowDeliveries_Click(object sender, RoutedEventArgs e) => new DeliveriesWindow().ShowDialog();
-
-        private void BtnShowDistributions_Click(object sender, RoutedEventArgs e) => new DistributionsWindow { User = User }.ShowDialog();
-
-        private void SearchTxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        public void UpdateEquipments()
         {
             Equipments.Clear();
             Equipments.AddRange(GetEquipmentsContainedText(searchTxtBox.Text.ToLower()));
+        }
+
+        private void BtnShowDeliveries_Click(object sender, RoutedEventArgs e) => new DeliveriesWindow { Owner = this }.ShowDialog();
+
+        private void BtnShowDistributions_Click(object sender, RoutedEventArgs e) => new DistributionsWindow { User = User, Owner = this }.ShowDialog();
+
+        private void SearchTxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateEquipments();
             if (!Equipments.Any())
                 MessageBox.Show("Нет результатов поиска");
         }
@@ -57,7 +62,7 @@ namespace EquipmentAccounting.Views
         {
             return Entities.Context.Equipments
                 .ToList()
-                .Where(x => $"{x.Name}{x.DeliveryDate}{x.Type}{x.CountInStock}".ToLower().Contains(text));
+                .Where(x => $"{x.Name}{x.Type}{x.CountInStock}".ToLower().Contains(text));
         }
     }
 }

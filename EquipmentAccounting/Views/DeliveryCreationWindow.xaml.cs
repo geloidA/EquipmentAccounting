@@ -1,17 +1,9 @@
 ﻿using EquipmentAccounting.DataBase;
+using EquipmentAccounting.Extensions;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EquipmentAccounting.Views
 {
@@ -20,11 +12,79 @@ namespace EquipmentAccounting.Views
     /// </summary>
     public partial class DeliveryCreationWindow : Window
     {
+        public ObservableCollection<Equipments> Equipments { get; set; }
+        public ObservableCollection<Suppliers> Suppliers { get; set; }
+        public DateTime SelectedDeliveryTime { get; set; } = DateTime.Now;
+        public Equipments SelectedEquipment { get; set; }
+        public Suppliers SelectedSupplier { get; set; }
+
         public DeliveryCreationWindow()
         {
             InitializeComponent();
+            Equipments = new ObservableCollection<Equipments>
+            {
+                new Equipments { CountInStock = 1 }
+            };
+            Suppliers = new ObservableCollection<Suppliers>(Entities.Context.Suppliers);
+            DataContext = this;
         }
 
-        public Deliveries CreatedDelivery { get; private set; }
+        private void NewEquipment(object sender, RoutedEventArgs e)
+        {
+            Equipments.Add(new Equipments { CountInStock = 1 });
+        }
+
+        private void RemoveEquipment(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEquipment != null)
+                Equipments.Remove(SelectedEquipment);
+        }
+
+        private void Save(object sender, RoutedEventArgs e)
+        {
+            if (!IsEquipmentsValid && SelectedSupplier != null)
+            {
+                MessageBox.Show("Ошибка валидации");
+                return;
+            }
+            var equips = Entities.Context.Equipments;
+            Entities.Context.SaveChanges();
+            foreach (var eq in Equipments)
+            {
+                var possibleDuplicate = equips.FirstOrDefault(x => x.Name.ToLower() == eq.Name.ToLower());
+                if (possibleDuplicate != null) possibleDuplicate.CountInStock += eq.CountInStock;
+                Entities.Context.Deliveries.Add(new Deliveries
+                {
+                    Date = SelectedDeliveryTime,
+                    Equipments = possibleDuplicate ?? eq,
+                    Count = eq.CountInStock,
+                    Suppliers = SelectedSupplier
+                });
+            }
+            Entities.Context.SaveChanges();
+            DialogResult = true;
+            Close();
+        }
+
+        private bool IsEquipmentsValid => Equipments.All(x => x.CountInStock > 0
+                && !string.IsNullOrEmpty(x.Type)
+                && !string.IsNullOrEmpty(x.Name));
+
+
+        private void Cancel(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
+        }
+
+        private void ShowSuppliersWindow(object sender, RoutedEventArgs e)
+        {
+            var result = new SupplierCreationWindow { Owner = this }.ShowDialog();
+            if (result == true)
+            {
+                Suppliers.Clear();
+                Suppliers.AddRange(Entities.Context.Suppliers);
+            }
+        }
     }
 }

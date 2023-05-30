@@ -5,24 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
         Title="DeliveryCreationWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height=".15*"/>
             <RowDefinition Height="1.5*"/>
+            <RowDefinition Height=".2*"/>
         </Grid.RowDefinitions>
         <StackPanel VerticalAlignment="Center">
             <UniformGrid Columns="2" Margin="2" >
                 <TextBlock Text="Дата:" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <DatePicker Width="200" />
+                <DatePicker Width="200" HorizontalAlignment="Left" SelectedDate="{Binding SelectedDeliveryTime}" />
             </UniformGrid>
             <UniformGrid Columns="2" Margin="2" >
                 <TextBlock Text="Поставщик:" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <ComboBox Width="200"/>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <ComboBox ItemsSource="{Binding Suppliers}" Width="200" Name="cmbSuppliers" 
+                              SelectedItem="{Binding SelectedSupplier}"/>
+                    <Button Content="Поставщики" Margin="10 0 0 0" Click="ShowSuppliersWindow"/>
+                </StackPanel>
             </UniformGrid>
         </StackPanel>
-        <DataGrid Grid.Row="1" Margin="5">
-            
+        <TextBlock Text="Оборудование:" Margin="5 0 0 0" Grid.Row="1" />
+        <DataGrid Grid.Row="2" Margin="5" CanUserAddRows="False" 
+                  SelectedItem="{Binding SelectedEquipment}"
+                  Name="dgDeliveryEquipments" ItemsSource="{Binding Equipments}"
+                  AutoGenerateColumns="False" ColumnWidth="*" >
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Новое оборудование" Click="NewEquipment" />
+                    <MenuItem Header="Удалить" Click="RemoveEquipment" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Кол-во" Binding="{Binding CountInStock}"/>
+            </DataGrid.Columns>
         </DataGrid>
+        <UniformGrid Columns="2" Grid.Row="3" Margin="2" >
+            <Button Content="Сохранить" Click="Save" 
+                Grid.Row="3" HorizontalAlignment="Center"/>
+            <Button Content="Отмена" Click="Cancel" 
+                Grid.Row="3" HorizontalAlignment="Center"/>
+        </UniformGrid>
     </Grid>
 </Window>

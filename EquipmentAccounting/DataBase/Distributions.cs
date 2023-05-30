@@ -15,10 +15,11 @@ namespace EquipmentAccounting.DataBase
     public partial class Distributions
     {
         public int ID { get; set; }
-        public Nullable<int> EquipmentID { get; set; }
+        public int EquipmentID { get; set; }
         public string Description { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public int UserID { get; set; }
         public int EquipmentCount { get; set; }
+        public System.DateTime Date { get; set; }
     
         public virtual Equipments Equipments { get; set; }
         public virtual Users Users { get; set; }

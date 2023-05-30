@@ -52,7 +52,15 @@ namespace EquipmentAccounting.Views
             foreach (var eq in Equipments)
             {
                 var possibleDuplicate = equips.FirstOrDefault(x => x.Name.ToLower() == eq.Name.ToLower());
-                if (possibleDuplicate != null) possibleDuplicate.CountInStock += eq.CountInStock;
+                if (possibleDuplicate != null)
+                {
+                    possibleDuplicate.CountInStock += eq.CountInStock;
+                    possibleDuplicate.CountAll += eq.CountInStock;
+                }
+                else
+                {
+                    eq.CountAll = eq.CountInStock;
+                }
                 Entities.Context.Deliveries.Add(new Deliveries
                 {
                     Date = SelectedDeliveryTime,

@@ -11,25 +11,32 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.1*"/>
-            <RowDefinition/>
+            <RowDefinition />
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <TextBlock Margin="10 0 0 0" Text="Распределения" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1"
+                    VerticalAlignment="Center" Margin="5 0 0 0">
+            <TextBlock Text="Поиск:"/>
+            <TextBox Width="150" Margin="10 0 0 0" TextChanged="TextBox_TextChanged"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
         <Button x:Name="btnCreateExcelReport" Content="Создать отчет" Grid.Row="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0"/>
-        <DataGrid Grid.Row="2" Margin="5" Name="dgDeliveries" IsReadOnly="True" 
-                  AutoGenerateColumns="False" ColumnWidth="*" >
+        <DataGrid Grid.Row="2" Margin="5" Name="dgDistributions" IsReadOnly="True" 
+                  AutoGenerateColumns="False" ColumnWidth="*"  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Поставщик" Binding="{Binding Suppliers.Name}" />
+                <DataGridTextColumn Header="Инициатор" Binding="{Binding Users.FullName}" />
                 <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=d}" />
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" />
                 <DataGridTextColumn Header="Оборудование" Binding="{Binding Equipments.Name}" />
-                <DataGridTextColumn Header="Кол-во на единиц" Binding="{Binding Count}" />
+                <DataGridTextColumn Header="Кол-во" Binding="{Binding EquipmentCount}" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                     Margin="10 0 10 0" Grid.Row="3">
-            <Button x:Name="btnAddNewDelivery" Grid.Row="3" Content="Новая поставка" 
-                Margin="0 0 10 0" />
+            <Button Grid.Row="3" Content="Новое распределение" 
+                Margin="0 0 10 0" Click="BtnAddNewDistribution_Click" />
         </StackPanel>
     </Grid>
 </Window>

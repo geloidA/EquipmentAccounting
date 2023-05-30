@@ -25,6 +25,7 @@ namespace EquipmentAccounting.DataBase
         public string Name { get; set; }
         public string Type { get; set; }
         public int CountInStock { get; set; }
+        public int CountAll { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deliveries> Deliveries { get; set; }

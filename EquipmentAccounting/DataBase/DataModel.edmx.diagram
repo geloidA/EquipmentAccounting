@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b41c6b6955644d8790d72e096e0251a2" Name="Diagram1">
+      <Diagram DiagramId="68c00ab1f6b34b2899fcd758564d13b7" Name="Diagram1">
         <EntityTypeShape EntityType="EquipmentAccountingModel.Deliveries" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="EquipmentAccountingModel.Distributions" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EquipmentAccountingModel.Equipments" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.Equipments" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="EquipmentAccountingModel.Roles" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EquipmentAccountingModel.Suppliers" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EquipmentAccountingModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />

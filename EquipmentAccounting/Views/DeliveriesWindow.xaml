@@ -27,7 +27,7 @@
                 <DataGridTextColumn Header="Поставщик" Binding="{Binding Suppliers.Name}" />
                 <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=d}" />
                 <DataGridTextColumn Header="Оборудование" Binding="{Binding Equipments.Name}" />
-                <DataGridTextColumn Header="Кол-во на единиц" Binding="{Binding Count}" />
+                <DataGridTextColumn Header="Кол-во единиц" Binding="{Binding Count}" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"

@@ -108,11 +108,15 @@
     </Compile>
     <Compile Include="Extensions\ObservableCollection.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Help\EquipmentHelp.cs" />
     <Compile Include="Views\DeliveriesWindow.xaml.cs">
       <DependentUpon>DeliveriesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DeliveryCreationWindow.xaml.cs">
       <DependentUpon>DeliveryCreationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DestributionCreationWindow.xaml.cs">
+      <DependentUpon>DestributionCreationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DistributionsWindow.xaml.cs">
       <DependentUpon>DistributionsWindow.xaml</DependentUpon>
@@ -167,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DeliveryCreationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DestributionCreationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

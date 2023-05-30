@@ -34,6 +34,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CountInStock" Type="int" Nullable="false" />
+          <Property Name="CountAll" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -198,6 +199,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CountInStock" Type="Int32" Nullable="false" />
+          <Property Name="CountAll" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Equipments" FromRole="Equipments" ToRole="Deliveries" />
           <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_Equipments" FromRole="Equipments" ToRole="Distributions" />
         </EntityType>
@@ -366,6 +368,7 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="CountInStock" ColumnName="CountInStock" />
+                <ScalarProperty Name="CountAll" ColumnName="CountAll" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

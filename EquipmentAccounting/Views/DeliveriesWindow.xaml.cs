@@ -2,6 +2,8 @@
 using EquipmentAccounting.Extensions;
 using Microsoft.Win32;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -70,21 +72,37 @@ namespace EquipmentAccounting.Views
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Отчет по поставкам");
 
-                // Заголовки столбцов
-                worksheet.Cells[1, 1].Value = "Дата";
-                worksheet.Cells[1, 2].Value = "Оборудование";
-                worksheet.Cells[1, 3].Value = "Кол-во, шт.";
-                worksheet.Cells[1, 4].Value = "Поставщик";
+                // Установка значения ячейки для заголовка
+                worksheet.Cells["A1"].Value = "Отчет";
 
+                // Применение форматирования для заголовка
+                worksheet.Cells["A1"].Style.Font.Bold = true;
+                worksheet.Cells["A1"].Style.Font.Size = 14;
+                worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                worksheet.Cells["B1"].Value = $"Дата формирования отчета: {DateTime.Now:dd.MM.yyyy}";
+                worksheet.Cells["B1"].Style.Font.Bold = true;
+                worksheet.Cells["B1"].Style.Font.Italic = true;
+                worksheet.Cells["B1"].Style.Font.Size = 10;
+                worksheet.Cells["B1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                // Заголовки столбцов
+                worksheet.Cells[2, 1].Value = "Дата";
+                worksheet.Cells[2, 2].Value = "Оборудование";
+                worksheet.Cells[2, 3].Value = "Кол-во, шт.";
+                worksheet.Cells[2, 4].Value = "Поставщик";
+                int i = 0;
                 // Заполнение данных
-                for (int i = 0; i < deliveries.Count; i++)
+                for (; i < deliveries.Count; i++)
                 {
                     var delivery = deliveries[i];
-                    worksheet.Cells[i + 2, 1].Value = delivery.Date.ToString("dd MMM yyyy HH:mm");
-                    worksheet.Cells[i + 2, 2].Value = delivery.Equipments.Name;
-                    worksheet.Cells[i + 2, 3].Value = delivery.Count;
-                    worksheet.Cells[i + 2, 4].Value = delivery.Suppliers.Name;
+                    worksheet.Cells[i + 3, 1].Value = delivery.Date.ToString("dd MMM yyyy HH:mm");
+                    worksheet.Cells[i + 3, 2].Value = delivery.Equipments.Name;
+                    worksheet.Cells[i + 3, 3].Value = delivery.Count;
+                    worksheet.Cells[i + 3, 4].Value = delivery.Suppliers.Name;
                 }
+
+                worksheet.Cells[i + 3, 1].Value = "Подпись:";
 
                 // Автонастройка ширины столбцов
                 worksheet.Cells.AutoFitColumns();

@@ -5,26 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-        mc:Ignorable="d"        
+        mc:Ignorable="d"      
+        Icon="/Resources/icon.png"        
+        MinHeight="450" MinWidth="700"
         WindowStartupLocation="CenterScreen"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="Авторизация" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions> 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Label Content="Username:" Grid.Row="0" Grid.Column="0" Margin="5" />
-        <TextBox Name="txtBLogin" Grid.Row="0" Grid.Column="1" Margin="5" />
-        <Label Content="Password:" Grid.Row="1" Grid.Column="0" Margin="5" />
-        <PasswordBox Name="txtBPassword"  Grid.Row="1" Grid.Column="1" Margin="5" />
-        <Button Content="Login" Grid.Row="2"
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Width="500">
+            <UniformGrid Columns="2">
+                <Label Content="Логин:" Grid.Row="0" Grid.Column="0" Margin="5" />
+                <TextBox Name="txtBLogin" Grid.Row="0" Grid.Column="1" Margin="5" />
+            </UniformGrid>
+            <UniformGrid Columns="2">
+                <Label Content="Пароль:" Grid.Row="1" Grid.Column="0" Margin="5" />
+                <PasswordBox Name="txtBPassword" 
+                             Grid.Row="1" Grid.Column="1" Margin="5" />
+            </UniformGrid>
+            <Button Content="Авторизироваться" Grid.Row="2"
                 Grid.Column="1" Margin="5" Click="Button_Click" />
-        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Margin="5" />
+        </StackPanel>
     </Grid>
 </Window>

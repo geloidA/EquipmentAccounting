@@ -42,7 +42,7 @@ namespace EquipmentAccounting.Views
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            if (!IsEquipmentsValid && SelectedSupplier != null)
+            if (!IsEquipmentsValid || SelectedSupplier == null)
             {
                 MessageBox.Show("Ошибка валидации");
                 return;
@@ -71,7 +71,6 @@ namespace EquipmentAccounting.Views
             }
             Entities.Context.SaveChanges();
             DialogResult = true;
-            Close();
         }
 
         private bool IsEquipmentsValid => Equipments.All(x => x.CountInStock > 0
@@ -82,7 +81,6 @@ namespace EquipmentAccounting.Views
         private void Cancel(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            Close();
         }
 
         private void ShowSuppliersWindow(object sender, RoutedEventArgs e)

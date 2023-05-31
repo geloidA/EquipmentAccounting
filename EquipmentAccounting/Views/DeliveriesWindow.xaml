@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
-        mc:Ignorable="d"
+        mc:Ignorable="d"        
+        Icon="/Resources/icon.png"
+        MinHeight="450" MinWidth="700"
         WindowStartupLocation="CenterOwner"
-        Title="DeliveriesWindow" Height="450" Width="800">
+        Title="Поставки" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
@@ -25,7 +27,7 @@
                   AutoGenerateColumns="False" ColumnWidth="*" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Поставщик" Binding="{Binding Suppliers.Name}" />
-                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm}" />
+                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
                 <DataGridTextColumn Header="Оборудование" Binding="{Binding Equipments.Name}" />
                 <DataGridTextColumn Header="Кол-во единиц" Binding="{Binding Count}" />
             </DataGrid.Columns>

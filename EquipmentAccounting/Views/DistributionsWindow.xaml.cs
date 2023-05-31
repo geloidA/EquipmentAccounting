@@ -2,6 +2,7 @@
 using EquipmentAccounting.Extensions;
 using Microsoft.Win32;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -70,23 +71,40 @@ namespace EquipmentAccounting.Views
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Отчет по распределениям");
 
-                // Заголовки столбцов
-                worksheet.Cells[1, 1].Value = "Дата";
-                worksheet.Cells[1, 2].Value = "Оборудование";
-                worksheet.Cells[1, 3].Value = "Кол-во, шт.";
-                worksheet.Cells[1, 4].Value = "Инициатор";
-                worksheet.Cells[1, 5].Value = "Описание";
+                // Установка значения ячейки для заголовка
+                worksheet.Cells["A1"].Value = "Отчет";
 
+                // Применение форматирования для заголовка
+                worksheet.Cells["A1"].Style.Font.Bold = true;
+                worksheet.Cells["A1"].Style.Font.Size = 14;
+                worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                worksheet.Cells["B1"].Value = $"Дата формирования отчета: {DateTime.Now:dd.MM.yyyy}";
+                worksheet.Cells["B1"].Style.Font.Bold = true;
+                worksheet.Cells["B1"].Style.Font.Italic = true;
+                worksheet.Cells["B1"].Style.Font.Size = 10;
+                worksheet.Cells["B1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                // Заголовки столбцов
+                worksheet.Cells[2, 1].Value = "Дата";
+                worksheet.Cells[2, 2].Value = "Оборудование";
+                worksheet.Cells[2, 3].Value = "Кол-во, шт.";
+                worksheet.Cells[2, 4].Value = "Инициатор";
+                worksheet.Cells[2, 5].Value = "Описание";
+
+                var i = 0;
                 // Заполнение данных
-                for (int i = 0; i < distributions.Count; i++)
+                for (; i < distributions.Count; i++)
                 {
                     var distribute = distributions[i];
-                    worksheet.Cells[i + 2, 1].Value = distribute.Date.ToString("dd MMM yyyy HH:mm");
-                    worksheet.Cells[i + 2, 2].Value = distribute.Equipments.Name;
-                    worksheet.Cells[i + 2, 3].Value = distribute.EquipmentCount;
-                    worksheet.Cells[i + 2, 4].Value = distribute.Users.FullName;
-                    worksheet.Cells[i + 2, 5].Value = distribute.Description;
+                    worksheet.Cells[i + 3, 1].Value = distribute.Date.ToString("dd MMM yyyy HH:mm");
+                    worksheet.Cells[i + 3, 2].Value = distribute.Equipments.Name;
+                    worksheet.Cells[i + 3, 3].Value = distribute.EquipmentCount;
+                    worksheet.Cells[i + 3, 4].Value = distribute.Users.FullName;
+                    worksheet.Cells[i + 3, 5].Value = distribute.Description;
                 }
+
+                worksheet.Cells[i + 3, 1].Value = "Подпись:";
 
                 // Автонастройка ширины столбцов
                 worksheet.Cells.AutoFitColumns();

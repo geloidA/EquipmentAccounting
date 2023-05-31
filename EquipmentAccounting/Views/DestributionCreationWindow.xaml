@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         mc:Ignorable="d"
-        Title="DestributionCreationWindow" Height="450" Width="800">
+        Icon="/Resources/icon.png"
+        MinHeight="450" MinWidth="700"
+        Title="Создание распределения" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -38,10 +40,11 @@
             </DataGrid.Columns>
         </DataGrid>
         <UniformGrid Columns="2" Grid.Row="3" Margin="2" >
-            <Button Content="Сохранить" Click="Save" 
+            <Button Content="Сохранить" Click="Save" Width="150"
+                    Margin="3"
                 Grid.Row="3" HorizontalAlignment="Center"/>
-            <Button Content="Отмена" Click="Cancel"
-                Grid.Row="3" HorizontalAlignment="Center"/>
+            <Button Content="Отмена" Click="Cancel" Width="150"
+                    Margin="3" Grid.Row="3" HorizontalAlignment="Center"/>
         </UniformGrid>
     </Grid>
 </Window>

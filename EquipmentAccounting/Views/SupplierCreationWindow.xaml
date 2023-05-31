@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         mc:Ignorable="d"
+        Icon="/Resources/icon.png"
+        MinHeight="250" MinWidth="400"
         WindowStartupLocation="CenterOwner"
-        Title="SupplierCreationWindow" Height="250" Width="400">
+        Title="Создание поставщика" Height="250" Width="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

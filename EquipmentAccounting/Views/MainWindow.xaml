@@ -20,7 +20,7 @@
             <TextBox Width="150" Name="searchTxtBox" TextChanged="SearchTxtBox_TextChanged" VerticalAlignment="Center" Margin="10 0 0 0" />
         </StackPanel>
         <Button x:Name="btnCreateExcelReport" Content="Создать отчет" Grid.Row="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="btnCreateExcelReport_Click"/>
         <DataGrid Grid.Row="2" Margin="5" Name="dgEquipments" IsReadOnly="True"
                   AutoGenerateColumns="False" ColumnWidth="*" >
             <DataGrid.Columns>

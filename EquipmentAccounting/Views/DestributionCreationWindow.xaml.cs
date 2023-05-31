@@ -26,7 +26,6 @@ namespace EquipmentAccounting.Views
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
             if (!IsSelectedEquipmentsValid)
             {
                 MessageBox.Show("Оборудования выбрано больше чем возможно");
@@ -45,13 +44,13 @@ namespace EquipmentAccounting.Views
                 });
             }
             Entities.Context.SaveChanges();
-            Close();
+            DialogResult = true;
         }
 
         private bool IsSelectedEquipmentsValid => Equipments
             .Where(x => x.IsSelected)
             .All(x => x.Equipment.CountInStock >= x.SelectedCount);
 
-        private void Cancel(object sender, RoutedEventArgs e) => Close();
+        private void Cancel(object sender, RoutedEventArgs e) => DialogResult = false;
     }
 }

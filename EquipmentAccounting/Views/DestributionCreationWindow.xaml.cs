@@ -45,6 +45,10 @@ namespace EquipmentAccounting.Views
                 MessageBox.Show("Выберите место распределения");
                 return;
             }
+            var lastID = Entities.Context.Distributions
+                .ToList()
+                .LastOrDefault()?.ID ?? 0;
+            lastID++;
             foreach (var item in Equipments.Where(x => x.IsSelected))
             {
                 item.Equipment.Count -= item.SelectedCount;
@@ -57,10 +61,12 @@ namespace EquipmentAccounting.Views
                 {
                     var copy = item.Equipment.Copy();
                     copy.Count = item.SelectedCount;
+                    copy.Locations = SelectedLocationTo;
                     Entities.Context.Equipments.Add(copy);
                 }
                 Entities.Context.Distributions.Add(new Distributions
                 {
+                    ID = lastID,
                     Date = SelectedDate,
                     Equipments = item.Equipment,
                     Description = Description,

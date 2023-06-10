@@ -39,7 +39,13 @@ namespace EquipmentAccounting.DataBase
 
         internal Equipments Copy()
         {
-            throw new NotImplementedException();
+            return new Equipments
+            {
+                Name = Name,
+                EquipmentTypes = EquipmentTypes,
+                Count = Count,
+                Locations = Locations
+            };
         }
     }
 }

@@ -115,6 +115,9 @@
     <Compile Include="DataBase\EquipmentTypes.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\Locations.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\Roles.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -124,15 +127,13 @@
     <Compile Include="DataBase\sysdiagrams.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\UnitNumbers.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataBase\Users.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ObservableCollection.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Help\EquipmentHelp.cs" />
+    <Compile Include="Help\VisibilityRoleConverter.cs" />
     <Compile Include="Views\DeliveriesWindow.xaml.cs">
       <DependentUpon>DeliveriesWindow.xaml</DependentUpon>
     </Compile>
@@ -150,6 +151,9 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReturnEquipmentFromUnitWindow.xaml.cs">
+      <DependentUpon>ReturnEquipmentFromUnitWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SupplierCreationWindow.xaml.cs">
       <DependentUpon>SupplierCreationWindow.xaml</DependentUpon>
@@ -211,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReturnEquipmentFromUnitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

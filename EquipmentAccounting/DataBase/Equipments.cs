@@ -25,8 +25,8 @@ namespace EquipmentAccounting.DataBase
         public int ID { get; set; }
         public string Name { get; set; }
         public int EquipmentTypeID { get; set; }
-        public int CountInStock { get; set; }
-        public int CountAll { get; set; }
+        public int Count { get; set; }
+        public int LocationID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deliveries> Deliveries { get; set; }
@@ -35,5 +35,11 @@ namespace EquipmentAccounting.DataBase
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentBuild> EquipmentBuild { get; set; }
         public virtual EquipmentTypes EquipmentTypes { get; set; }
+        public virtual Locations Locations { get; set; }
+
+        internal Equipments Copy()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

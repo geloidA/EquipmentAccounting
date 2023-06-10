@@ -27,7 +27,12 @@ namespace EquipmentAccounting.Views
             EquipmentTypeCollection = new ObservableCollection<EquipmentTypes>(Entities.Context.EquipmentTypes);
             Equipments = new ObservableCollection<Equipments>
             {
-                new Equipments { CountInStock = 1, EquipmentTypes = EquipmentTypeCollection.First() }
+                new Equipments 
+                { 
+                    Count = 1, 
+                    EquipmentTypes = EquipmentTypeCollection.First(),
+                    Locations = Entities.Context.Locations.First(x => x.Name == "Склад")
+                }
             };
             Suppliers = new ObservableCollection<Suppliers>(Entities.Context.Suppliers);
             DataContext = this;
@@ -35,7 +40,12 @@ namespace EquipmentAccounting.Views
 
         private void NewEquipment(object sender, RoutedEventArgs e)
         {
-            Equipments.Add(new Equipments { CountInStock = 1, EquipmentTypes = EquipmentTypeCollection.First() });
+            Equipments.Add(new Equipments
+            {
+                Count = 1,
+                EquipmentTypes = EquipmentTypeCollection.First(),
+                Locations = Entities.Context.Locations.First(x => x.Name == "Склад")
+            });
         }
 
         private void RemoveEquipment(object sender, RoutedEventArgs e)
@@ -58,28 +68,23 @@ namespace EquipmentAccounting.Views
                 var possibleDuplicate = equips.FirstOrDefault(x => x.Name.ToLower() == eq.Name.ToLower());
                 if (possibleDuplicate != null)
                 {
-                    possibleDuplicate.CountInStock += eq.CountInStock;
-                    possibleDuplicate.CountAll += eq.CountInStock;
-                }
-                else
-                {
-                    eq.CountAll = eq.CountInStock;
+                    possibleDuplicate.Count += eq.Count;
                 }
                 Entities.Context.Deliveries.Add(new Deliveries
                 {
                     Date = SelectedDeliveryTime,
                     Equipments = possibleDuplicate ?? eq,
-                    Count = eq.CountInStock,
+                    Count = eq.Count,
                     Suppliers = SelectedSupplier,
                     InvoiceNumber = InvoiceNumber,
-                    InvoiceDate = SelectedInvoiceDate
+                    InvoiceDate = SelectedInvoiceDate                    
                 });
             }
             Entities.Context.SaveChanges();
             DialogResult = true;
         }
 
-        private bool IsEquipmentsValid => Equipments.All(x => x.CountInStock > 0
+        private bool IsEquipmentsValid => Equipments.All(x => x.Count > 0
                 && x.EquipmentTypes != null
                 && !string.IsNullOrEmpty(x.Name));
 

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         mc:Ignorable="d"
         Icon="/Resources/icon.png"
+        Loaded="Window_Loaded"
         MinHeight="450" MinWidth="700"
         Title="Создание распределения" Height="450" Width="800">
     <Grid>
@@ -28,9 +29,13 @@
                          Text="{Binding InvoiceNumber}" />
                 </UniformGrid>
                 <UniformGrid Columns="2" Margin="2" >
-                    <TextBlock Text="Подразделение:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="Куда:" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <ComboBox Width="175" HorizontalAlignment="Left"
-                         ItemsSource="{Binding UnitNumbers}" SelectedItem="{Binding SelectedUnitNumber}" />
+                              Name="cmbLocationTo"
+                              DropDownOpened="cmbLocationTo_DropDownOpened"
+                              ItemsSource="{Binding Locations}" 
+                              SelectedItem="{Binding SelectedLocationTo}" 
+                              SelectionChanged="cmbLocationTo_SelectionChanged" />
                 </UniformGrid>
             </StackPanel>
             <StackPanel VerticalAlignment="Center" >
@@ -46,14 +51,24 @@
                 </UniformGrid>
             </StackPanel>
         </UniformGrid>
-        <TextBlock Text="Оборудование:" Margin="5 0 0 0" Grid.Row="1" />
+        <TextBlock Text="Оборудование:" VerticalAlignment="Center" Margin="5 0 0 0" Grid.Row="1" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center"
+                    HorizontalAlignment="Right">
+            <TextBlock Text="Откуда:" VerticalAlignment="Center" />
+            <ComboBox ItemsSource="{Binding Locations}" 
+                      Name="cmbLocationFrom"
+                      DropDownOpened="cmbLocationFrom_DropDownOpened"
+                      SelectedItem="{Binding SelectedLocationFrom}"
+                      Width="100" Margin="10 0 5 0" 
+                      SelectionChanged="cmbLocationsFrom_SelectionChanged" />
+        </StackPanel>
         <DataGrid Grid.Row="2" Margin="5" CanUserAddRows="False"
                   Name="dgDeliveryEquipments" ItemsSource="{Binding Equipments}"
                   AutoGenerateColumns="False" ColumnWidth="*" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Equipment.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Тип" Binding="{Binding Equipment.EquipmentTypes.Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Кол-во на складе" Binding="{Binding Equipment.CountInStock}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Кол-во в месте" Binding="{Binding Equipment.Count}" IsReadOnly="True"/>
                 <DataGridCheckBoxColumn Header="Включить" Binding="{Binding IsSelected}"/>
                 <DataGridTextColumn Header="Кол-во" Binding="{Binding SelectedCount}" IsReadOnly="{Binding IsSelected}"/>
             </DataGrid.Columns>

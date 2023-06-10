@@ -22,10 +22,10 @@ namespace EquipmentAccounting.DataBase
         public System.DateTime Date { get; set; }
         public int InvoiceNumber { get; set; }
         public System.DateTime InvoiceDate { get; set; }
-        public int UnitNumberID { get; set; }
+        public int LocationID { get; set; }
     
         public virtual Equipments Equipments { get; set; }
-        public virtual UnitNumbers UnitNumbers { get; set; }
+        public virtual Locations Locations { get; set; }
         public virtual Users Users { get; set; }
     }
 }

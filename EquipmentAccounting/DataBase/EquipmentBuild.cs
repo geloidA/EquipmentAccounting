@@ -15,11 +15,11 @@ namespace EquipmentAccounting.DataBase
     public partial class EquipmentBuild
     {
         public int InventoryNumber { get; set; }
-        public int UnitNumberID { get; set; }
+        public int LocationID { get; set; }
         public int EquipmentID { get; set; }
         public System.DateTime Date { get; set; }
     
         public virtual Equipments Equipments { get; set; }
-        public virtual UnitNumbers UnitNumbers { get; set; }
+        public virtual Locations Locations { get; set; }
     }
 }

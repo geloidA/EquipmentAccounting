@@ -12,23 +12,26 @@ namespace EquipmentAccounting.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class UnitNumbers
+    public partial class Locations
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UnitNumbers()
+        public Locations()
         {
             this.Distributions = new HashSet<Distributions>();
             this.EquipmentBuild = new HashSet<EquipmentBuild>();
+            this.Equipments = new HashSet<Equipments>();
         }
     
         public int ID { get; set; }
-        public string Number { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distributions> Distributions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentBuild> EquipmentBuild { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Equipments> Equipments { get; set; }
 
-        public override string ToString() => Number;
+        public override string ToString() => Name;
     }
 }

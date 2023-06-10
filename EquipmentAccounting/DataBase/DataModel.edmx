@@ -21,7 +21,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EquipmentID" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="UserID" Type="int" Nullable="false" />
@@ -29,14 +29,14 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="InvoiceNumber" Type="int" Nullable="false" />
           <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
-          <Property Name="UnitNumberID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EquipmentBuild">
           <Key>
             <PropertyRef Name="InventoryNumber" />
           </Key>
           <Property Name="InventoryNumber" Type="int" Nullable="false" />
-          <Property Name="UnitNumberID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="EquipmentID" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
         </EntityType>
@@ -47,10 +47,17 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EquipmentTypeID" Type="int" Nullable="false" />
-          <Property Name="CountInStock" Type="int" Nullable="false" />
-          <Property Name="CountAll" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EquipmentTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -82,13 +89,6 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="UnitNumbers">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -136,15 +136,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Distributions_UnitNumbers">
-          <End Role="UnitNumbers" Type="Self.UnitNumbers" Multiplicity="1" />
+        <Association Name="FK_Distributions_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UnitNumbers">
+            <Principal Role="Locations">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Distributions">
-              <PropertyRef Name="UnitNumberID" />
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -172,15 +172,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EquipmentBuild_UnitNumbers">
-          <End Role="UnitNumbers" Type="Self.UnitNumbers" Multiplicity="1" />
+        <Association Name="FK_EquipmentBuild_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UnitNumbers">
+            <Principal Role="Locations">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EquipmentBuild">
-              <PropertyRef Name="UnitNumberID" />
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -193,6 +193,18 @@
             </Principal>
             <Dependent Role="Equipments">
               <PropertyRef Name="EquipmentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipments_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Equipments">
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -214,10 +226,10 @@
           <EntitySet Name="EquipmentBuild" EntityType="Self.EquipmentBuild" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipments" EntityType="Self.Equipments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentTypes" EntityType="Self.EquipmentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UnitNumbers" EntityType="Self.UnitNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Deliveries_Equipments" Association="Self.FK_Deliveries_Equipments">
             <End Role="Equipments" EntitySet="Equipments" />
@@ -231,8 +243,8 @@
             <End Role="Equipments" EntitySet="Equipments" />
             <End Role="Distributions" EntitySet="Distributions" />
           </AssociationSet>
-          <AssociationSet Name="FK_Distributions_UnitNumbers" Association="Self.FK_Distributions_UnitNumbers">
-            <End Role="UnitNumbers" EntitySet="UnitNumbers" />
+          <AssociationSet Name="FK_Distributions_Locations" Association="Self.FK_Distributions_Locations">
+            <End Role="Locations" EntitySet="Locations" />
             <End Role="Distributions" EntitySet="Distributions" />
           </AssociationSet>
           <AssociationSet Name="FK_Distributions_Users" Association="Self.FK_Distributions_Users">
@@ -243,12 +255,16 @@
             <End Role="Equipments" EntitySet="Equipments" />
             <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipmentBuild_UnitNumbers" Association="Self.FK_EquipmentBuild_UnitNumbers">
-            <End Role="UnitNumbers" EntitySet="UnitNumbers" />
+          <AssociationSet Name="FK_EquipmentBuild_Locations" Association="Self.FK_EquipmentBuild_Locations">
+            <End Role="Locations" EntitySet="Locations" />
             <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
           </AssociationSet>
           <AssociationSet Name="FK_Equipments_EquipmentType" Association="Self.FK_Equipments_EquipmentType">
             <End Role="EquipmentTypes" EntitySet="EquipmentTypes" />
+            <End Role="Equipments" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipments_Locations" Association="Self.FK_Equipments_Locations">
+            <End Role="Locations" EntitySet="Locations" />
             <End Role="Equipments" EntitySet="Equipments" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
@@ -279,7 +295,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
@@ -287,9 +303,9 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="InvoiceNumber" Type="Int32" Nullable="false" />
           <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UnitNumberID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Equipments" Relationship="Self.FK_Distributions_Equipments" FromRole="Distributions" ToRole="Equipments" />
-          <NavigationProperty Name="UnitNumbers" Relationship="Self.FK_Distributions_UnitNumbers" FromRole="Distributions" ToRole="UnitNumbers" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Distributions_Locations" FromRole="Distributions" ToRole="Locations" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Distributions_Users" FromRole="Distributions" ToRole="Users" />
         </EntityType>
         <EntityType Name="EquipmentBuild">
@@ -297,11 +313,11 @@
             <PropertyRef Name="InventoryNumber" />
           </Key>
           <Property Name="InventoryNumber" Type="Int32" Nullable="false" />
-          <Property Name="UnitNumberID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
           <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Equipments" Relationship="Self.FK_EquipmentBuild_Equipments" FromRole="EquipmentBuild" ToRole="Equipments" />
-          <NavigationProperty Name="UnitNumbers" Relationship="Self.FK_EquipmentBuild_UnitNumbers" FromRole="EquipmentBuild" ToRole="UnitNumbers" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_EquipmentBuild_Locations" FromRole="EquipmentBuild" ToRole="Locations" />
         </EntityType>
         <EntityType Name="Equipments">
           <Key>
@@ -310,12 +326,13 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EquipmentTypeID" Type="Int32" Nullable="false" />
-          <Property Name="CountInStock" Type="Int32" Nullable="false" />
-          <Property Name="CountAll" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Equipments" FromRole="Equipments" ToRole="Deliveries" />
           <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_Equipments" FromRole="Equipments" ToRole="Distributions" />
           <NavigationProperty Name="EquipmentBuild" Relationship="Self.FK_EquipmentBuild_Equipments" FromRole="Equipments" ToRole="EquipmentBuild" />
           <NavigationProperty Name="EquipmentTypes" Relationship="Self.FK_Equipments_EquipmentType" FromRole="Equipments" ToRole="EquipmentTypes" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Equipments_Locations" FromRole="Equipments" ToRole="Locations" />
         </EntityType>
         <EntityType Name="EquipmentTypes">
           <Key>
@@ -324,6 +341,16 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Equipments" Relationship="Self.FK_Equipments_EquipmentType" FromRole="EquipmentTypes" ToRole="Equipments" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_Locations" FromRole="Locations" ToRole="Distributions" />
+          <NavigationProperty Name="EquipmentBuild" Relationship="Self.FK_EquipmentBuild_Locations" FromRole="Locations" ToRole="EquipmentBuild" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_Equipments_Locations" FromRole="Locations" ToRole="Equipments" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -352,15 +379,6 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="UnitNumbers">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_UnitNumbers" FromRole="UnitNumbers" ToRole="Distributions" />
-          <NavigationProperty Name="EquipmentBuild" Relationship="Self.FK_EquipmentBuild_UnitNumbers" FromRole="UnitNumbers" ToRole="EquipmentBuild" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -410,15 +428,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Distributions_UnitNumbers">
-          <End Role="UnitNumbers" Type="Self.UnitNumbers" Multiplicity="1" />
+        <Association Name="FK_Distributions_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UnitNumbers">
+            <Principal Role="Locations">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Distributions">
-              <PropertyRef Name="UnitNumberID" />
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -446,15 +464,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EquipmentBuild_UnitNumbers">
-          <End Role="UnitNumbers" Type="Self.UnitNumbers" Multiplicity="1" />
+        <Association Name="FK_EquipmentBuild_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UnitNumbers">
+            <Principal Role="Locations">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EquipmentBuild">
-              <PropertyRef Name="UnitNumberID" />
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -467,6 +485,18 @@
             </Principal>
             <Dependent Role="Equipments">
               <PropertyRef Name="EquipmentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipments_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Equipments">
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -488,10 +518,10 @@
           <EntitySet Name="EquipmentBuild" EntityType="Self.EquipmentBuild" />
           <EntitySet Name="Equipments" EntityType="Self.Equipments" />
           <EntitySet Name="EquipmentTypes" EntityType="Self.EquipmentTypes" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="UnitNumbers" EntityType="Self.UnitNumbers" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK_Deliveries_Equipments" Association="Self.FK_Deliveries_Equipments">
             <End Role="Equipments" EntitySet="Equipments" />
@@ -505,8 +535,8 @@
             <End Role="Equipments" EntitySet="Equipments" />
             <End Role="Distributions" EntitySet="Distributions" />
           </AssociationSet>
-          <AssociationSet Name="FK_Distributions_UnitNumbers" Association="Self.FK_Distributions_UnitNumbers">
-            <End Role="UnitNumbers" EntitySet="UnitNumbers" />
+          <AssociationSet Name="FK_Distributions_Locations" Association="Self.FK_Distributions_Locations">
+            <End Role="Locations" EntitySet="Locations" />
             <End Role="Distributions" EntitySet="Distributions" />
           </AssociationSet>
           <AssociationSet Name="FK_Distributions_Users" Association="Self.FK_Distributions_Users">
@@ -517,12 +547,16 @@
             <End Role="Equipments" EntitySet="Equipments" />
             <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipmentBuild_UnitNumbers" Association="Self.FK_EquipmentBuild_UnitNumbers">
-            <End Role="UnitNumbers" EntitySet="UnitNumbers" />
+          <AssociationSet Name="FK_EquipmentBuild_Locations" Association="Self.FK_EquipmentBuild_Locations">
+            <End Role="Locations" EntitySet="Locations" />
             <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
           </AssociationSet>
           <AssociationSet Name="FK_Equipments_EquipmentType" Association="Self.FK_Equipments_EquipmentType">
             <End Role="EquipmentTypes" EntitySet="EquipmentTypes" />
+            <End Role="Equipments" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipments_Locations" Association="Self.FK_Equipments_Locations">
+            <End Role="Locations" EntitySet="Locations" />
             <End Role="Equipments" EntitySet="Equipments" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
@@ -560,7 +594,7 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="UnitNumberID" ColumnName="UnitNumberID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -568,7 +602,7 @@
             <EntityTypeMapping TypeName="EquipmentAccountingModel.EquipmentBuild">
               <MappingFragment StoreEntitySet="EquipmentBuild">
                 <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
-                <ScalarProperty Name="UnitNumberID" ColumnName="UnitNumberID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
@@ -580,14 +614,22 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="EquipmentTypeID" ColumnName="EquipmentTypeID" />
-                <ScalarProperty Name="CountInStock" ColumnName="CountInStock" />
-                <ScalarProperty Name="CountAll" ColumnName="CountAll" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EquipmentTypes">
             <EntityTypeMapping TypeName="EquipmentAccountingModel.EquipmentTypes">
               <MappingFragment StoreEntitySet="EquipmentTypes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.Locations">
+              <MappingFragment StoreEntitySet="Locations">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -619,14 +661,6 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UnitNumbers">
-            <EntityTypeMapping TypeName="EquipmentAccountingModel.UnitNumbers">
-              <MappingFragment StoreEntitySet="UnitNumbers">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

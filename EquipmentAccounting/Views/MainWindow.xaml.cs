@@ -21,13 +21,24 @@ namespace EquipmentAccounting.Views
         public Users User { get; set; }
 
         public ObservableCollection<Equipments> Equipments { get; set; }
+        public ObservableCollection<Locations> Locations { get; set; }
+        public Locations SelectedLocation { get; set; }
 
         public MainWindow()
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             InitializeComponent();
+            DataContext = this;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             Equipments = new ObservableCollection<Equipments>(Entities.Context.Equipments);
+            Locations = new ObservableCollection<Locations>(Entities.Context.Locations);
             dgEquipments.ItemsSource = Equipments;
+            cmbLocations.ItemsSource = Locations;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SelectedLocation = Locations.First(x => x.Name == "Склад");
+            cmbLocations.SelectedItem = SelectedLocation;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -57,7 +68,8 @@ namespace EquipmentAccounting.Views
         {
             return Entities.Context.Equipments
                 .ToList()
-                .Where(x => $"{x.Name}{x.EquipmentTypes.Name}{x.CountInStock}".ToLower().Contains(text));
+                .Where(x => x.Locations == SelectedLocation)
+                .Where(x => $"{x.Name}{x.EquipmentTypes.Name}{x.Count}".ToLower().Contains(text));
         }
 
         private void btnCreateExcelReport_Click(object sender, RoutedEventArgs e)
@@ -94,7 +106,7 @@ namespace EquipmentAccounting.Views
                 // Заголовки столбцов
                 worksheet.Cells[2, 1].Value = "Имя оборудования";
                 worksheet.Cells[2, 2].Value = "Тип оборудования";
-                worksheet.Cells[2, 3].Value = "Кол-во на складе, шт.";
+                worksheet.Cells[2, 3].Value = "Расположение";
                 worksheet.Cells[2, 4].Value = "Кол-во всего, шт.";
 
                 int i = 0;
@@ -104,8 +116,8 @@ namespace EquipmentAccounting.Views
                     Equipments equipment = equipments[i];
                     worksheet.Cells[i + 3, 1].Value = equipment.Name;
                     worksheet.Cells[i + 3, 2].Value = equipment.EquipmentTypes.Name;
-                    worksheet.Cells[i + 3, 3].Value = equipment.CountInStock;
-                    worksheet.Cells[i + 3, 4].Value = equipment.CountAll;
+                    worksheet.Cells[i + 3, 3].Value = equipment.Locations.Name;
+                    worksheet.Cells[i + 3, 4].Value = equipment.Count;
                 }
 
                 worksheet.Cells[i + 3, 1].Value = "Подпись:";
@@ -117,6 +129,11 @@ namespace EquipmentAccounting.Views
                 FileInfo fileInfo = new FileInfo(filePath);
                 package.SaveAs(fileInfo);
             }
+        }
+
+        private void ComboBoxLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateEquipments();
         }
     }
 }

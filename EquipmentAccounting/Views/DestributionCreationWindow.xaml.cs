@@ -45,28 +45,26 @@ namespace EquipmentAccounting.Views
                 MessageBox.Show("Выберите место распределения");
                 return;
             }
-            var lastID = Entities.Context.Distributions
-                .ToList()
-                .LastOrDefault()?.ID ?? 0;
-            lastID++;
             foreach (var item in Equipments.Where(x => x.IsSelected))
             {
                 item.Equipment.Count -= item.SelectedCount;
+                var nextEquipment = item.Equipment;
                 var possibleDublicate = SelectedLocationTo.Equipments.FirstOrDefault(x => x.Name == item.Equipment.Name);
                 if (possibleDublicate != null)
                 {
                     possibleDublicate.Count += item.SelectedCount;
+                    nextEquipment = item.Equipment.Count == 0 ? possibleDublicate : nextEquipment;
                 }
                 else
                 {
                     var copy = item.Equipment.Copy();
                     copy.Count = item.SelectedCount;
                     copy.Locations = SelectedLocationTo;
+                    nextEquipment = item.Equipment.Count == 0 ? copy : nextEquipment;
                     Entities.Context.Equipments.Add(copy);
                 }
                 Entities.Context.Distributions.Add(new Distributions
                 {
-                    ID = lastID,
                     Date = SelectedDate,
                     Equipments = item.Equipment,
                     Description = Description,
@@ -76,6 +74,14 @@ namespace EquipmentAccounting.Views
                     InvoiceDate = SelectedInvoiceDate,
                     InvoiceNumber = InvoiceNumber
                 });
+                if (item.Equipment.Count == 0)
+                {
+                    foreach (var delivery in item.Equipment.Deliveries)
+                        delivery.Equipments = nextEquipment;
+                    foreach (var distribution in item.Equipment.Distributions) 
+                        distribution.Equipments = nextEquipment;
+                    Entities.Context.Equipments.Remove(item.Equipment);
+                }
             }
             Entities.Context.SaveChanges();
             DialogResult = true;

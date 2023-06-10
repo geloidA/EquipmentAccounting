@@ -91,13 +91,13 @@
       <DependentUpon>DataModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\DataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="DataBase\DataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Deliveries.cs">
@@ -243,8 +243,8 @@
     </Content>
     <Content Include="DataBase\DataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataModel.edmx</DependentUpon>
       <LastGenOutput>DataModel.cs</LastGenOutput>
+      <DependentUpon>DataModel.edmx</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

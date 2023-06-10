@@ -35,7 +35,7 @@
                 <DataGridTextColumn Header="Описание" Binding="{Binding Description}" />
                 <DataGridTextColumn Header="Оборудование" Binding="{Binding Equipments.Name}" />
                 <DataGridTextColumn Header="Кол-во" Binding="{Binding EquipmentCount}" />
-                <DataGridTextColumn Header="Подразделение" Binding="{Binding UnitNumbers.Number}" />
+                <DataGridTextColumn Header="Подразделение" Binding="{Binding Locations.Name}" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"

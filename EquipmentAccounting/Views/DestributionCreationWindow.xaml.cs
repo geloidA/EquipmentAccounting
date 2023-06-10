@@ -15,12 +15,17 @@ namespace EquipmentAccounting.Views
         public Users User { get; set; }
         public ObservableCollection<EquipmentHelp> Equipments { get; set; }
         public DateTime SelectedDate { get; set; } = DateTime.Now;
+        public DateTime SelectedInvoiceDate { get; set; } = DateTime.Now;
+        public UnitNumbers SelectedUnitNumber { get; set; }
+        public ObservableCollection<UnitNumbers> UnitNumbers { get; set; }
+        public int InvoiceNumber { get; set; }
         public string Description { get; set; }
 
         public DestributionCreationWindow()
         {
             InitializeComponent();
             Equipments = new ObservableCollection<EquipmentHelp>(Entities.Context.Equipments.Select(x => new EquipmentHelp { Equipment = x }));
+            UnitNumbers = new ObservableCollection<UnitNumbers>(Entities.Context.UnitNumbers);
             DataContext = this;
         }
 
@@ -29,6 +34,11 @@ namespace EquipmentAccounting.Views
             if (!IsSelectedEquipmentsValid)
             {
                 MessageBox.Show("Оборудования выбрано больше чем возможно");
+                return;
+            }
+            if (SelectedUnitNumber == null)
+            {
+                MessageBox.Show("Выберите код подразделения");
                 return;
             }
             foreach (var item in Equipments.Where(x => x.IsSelected))
@@ -40,7 +50,10 @@ namespace EquipmentAccounting.Views
                     Equipments = item.Equipment,
                     Description = Description,
                     Users = User,
-                    EquipmentCount = item.SelectedCount
+                    EquipmentCount = item.SelectedCount,
+                    UnitNumbers = SelectedUnitNumber,
+                    InvoiceDate = SelectedInvoiceDate,
+                    InvoiceNumber = InvoiceNumber
                 });
             }
             Entities.Context.SaveChanges();

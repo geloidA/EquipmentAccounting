@@ -15,25 +15,44 @@
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height=".2*"/>
         </Grid.RowDefinitions>
-        <StackPanel VerticalAlignment="Center">
-            <UniformGrid Columns="2" Margin="2" >
-                <TextBlock Text="Дата:" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <DatePicker Width="200" HorizontalAlignment="Left" 
+        <UniformGrid Columns="2" VerticalAlignment="Center">
+            <StackPanel VerticalAlignment="Center">
+                <UniformGrid Columns="2" Margin="2" >
+                    <TextBlock Text="Дата накладной:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <DatePicker Width="175" HorizontalAlignment="Left" 
+                            SelectedDate="{Binding SelectedInvoiceDate}" />
+                </UniformGrid>
+                <UniformGrid Columns="2" Margin="2" >
+                    <TextBlock Text="Номер накладной:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBox Width="175" HorizontalAlignment="Left"
+                         Text="{Binding InvoiceNumber}" />
+                </UniformGrid>
+                <UniformGrid Columns="2" Margin="2" >
+                    <TextBlock Text="Подразделение:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <ComboBox Width="175" HorizontalAlignment="Left"
+                         ItemsSource="{Binding UnitNumbers}" SelectedItem="{Binding SelectedUnitNumber}" />
+                </UniformGrid>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" >
+                <UniformGrid Columns="2" Margin="2" >
+                    <TextBlock Text="Дата:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <DatePicker Width="175" HorizontalAlignment="Left" 
                             SelectedDate="{Binding SelectedDate}" />
-            </UniformGrid>
-            <UniformGrid Columns="2" Margin="2" >
-                <TextBlock Text="Описание:" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <TextBox Width="200" HorizontalAlignment="Left" Height="50" 
+                </UniformGrid>
+                <UniformGrid Columns="2" Margin="2" >
+                    <TextBlock Text="Описание:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBox Width="175" HorizontalAlignment="Left" Height="50" 
                          Text="{Binding Description}" TextWrapping="Wrap" />
-            </UniformGrid>
-        </StackPanel>
+                </UniformGrid>
+            </StackPanel>
+        </UniformGrid>
         <TextBlock Text="Оборудование:" Margin="5 0 0 0" Grid.Row="1" />
         <DataGrid Grid.Row="2" Margin="5" CanUserAddRows="False"
                   Name="dgDeliveryEquipments" ItemsSource="{Binding Equipments}"
                   AutoGenerateColumns="False" ColumnWidth="*" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Equipment.Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Тип" Binding="{Binding Equipment.Type}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Equipment.EquipmentTypes.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Кол-во на складе" Binding="{Binding Equipment.CountInStock}" IsReadOnly="True"/>
                 <DataGridCheckBoxColumn Header="Включить" Binding="{Binding IsSelected}"/>
                 <DataGridTextColumn Header="Кол-во" Binding="{Binding SelectedCount}" IsReadOnly="{Binding IsSelected}"/>

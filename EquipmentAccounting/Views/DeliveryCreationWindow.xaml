@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Icon="/Resources/icon.png"
         MinHeight="450" MinWidth="700"
+        Name="window"
         WindowStartupLocation="CenterOwner"
         Title="Создание поставки" Height="450" Width="800">
     <Grid>
@@ -16,21 +17,49 @@
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height=".2*"/>
         </Grid.RowDefinitions>
-        <StackPanel VerticalAlignment="Center">
-            <UniformGrid Columns="2" Margin="2" >
-                <TextBlock Text="Дата:" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <DatePicker Width="200" HorizontalAlignment="Left" SelectedDate="{Binding SelectedDeliveryTime}" />
-            </UniformGrid>
-            <UniformGrid Columns="2" Margin="2" >
-                <TextBlock Text="Поставщик:" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <StackPanel Orientation="Horizontal"
+        <UniformGrid Columns="2" VerticalAlignment="Center">
+            <StackPanel>
+                <Grid Margin="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Дата накладной:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <DatePicker Width="125" Grid.Column="1" HorizontalAlignment="Left" SelectedDate="{Binding SelectedInvoiceDate}" />
+                </Grid>
+                <Grid Margin="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Номер накладной:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Width="125" HorizontalAlignment="Left" Text="{Binding InvoiceNumber}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel>
+                <Grid Margin="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Дата поставки:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <DatePicker Width="125" Grid.Column="1" HorizontalAlignment="Left" SelectedDate="{Binding SelectedDeliveryTime}" />
+                </Grid>
+                <Grid Margin="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Поставщик:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" Grid.Column="1"
                             HorizontalAlignment="Left">
-                    <ComboBox ItemsSource="{Binding Suppliers}" Width="200" Name="cmbSuppliers" 
+                        <ComboBox ItemsSource="{Binding Suppliers}" Width="125" 
                               SelectedItem="{Binding SelectedSupplier}"/>
-                    <Button Content="Добавить поставщика" Margin="10 0 0 0" Click="ShowSuppliersWindow"/>
-                </StackPanel>
-            </UniformGrid>
-        </StackPanel>
+                        <Button Content="Добавить поставщика" Margin="10 0 0 0" Click="ShowSuppliersWindow"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </UniformGrid>
         <TextBlock Text="Оборудование:" Margin="5 0 0 0" Grid.Row="1" />
         <DataGrid Grid.Row="2" Margin="5" CanUserAddRows="False" 
                   SelectedItem="{Binding SelectedEquipment}"
@@ -44,7 +73,18 @@
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
+                <DataGridComboBoxColumn CanUserSort="False" CanUserReorder="False" Header="Тип" SelectedItemBinding="{Binding EquipmentTypes}" >
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.EquipmentTypeCollection, ElementName=window}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.EquipmentTypeCollection, ElementName=window}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Кол-во" Binding="{Binding CountInStock}"/>
             </DataGrid.Columns>
         </DataGrid>

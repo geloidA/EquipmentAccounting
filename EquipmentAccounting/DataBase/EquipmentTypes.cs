@@ -12,17 +12,20 @@ namespace EquipmentAccounting.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class Deliveries
+    public partial class EquipmentTypes
     {
-        public int ID { get; set; }
-        public System.DateTime Date { get; set; }
-        public int EquipmentID { get; set; }
-        public int Count { get; set; }
-        public int SupplierID { get; set; }
-        public int InvoiceNumber { get; set; }
-        public System.DateTime InvoiceDate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EquipmentTypes()
+        {
+            this.Equipments = new HashSet<Equipments>();
+        }
     
-        public virtual Equipments Equipments { get; set; }
-        public virtual Suppliers Suppliers { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Equipments> Equipments { get; set; }
+
+        public override string ToString() => Name;
     }
 }

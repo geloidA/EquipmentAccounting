@@ -27,7 +27,7 @@
                   AutoGenerateColumns="False" ColumnWidth="*" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Тип" Binding="{Binding Type}" />
+                <DataGridTextColumn Header="Тип" Binding="{Binding EquipmentTypes.Name}" />
                 <DataGridTextColumn Header="Кол-во на складе" Binding="{Binding CountInStock}" />
                 <DataGridTextColumn Header="Кол-во всего" Binding="{Binding CountAll}" />
             </DataGrid.Columns>

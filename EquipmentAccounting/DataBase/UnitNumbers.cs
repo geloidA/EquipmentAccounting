@@ -12,28 +12,23 @@ namespace EquipmentAccounting.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class Equipments
+    public partial class UnitNumbers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Equipments()
+        public UnitNumbers()
         {
-            this.Deliveries = new HashSet<Deliveries>();
             this.Distributions = new HashSet<Distributions>();
             this.EquipmentBuild = new HashSet<EquipmentBuild>();
         }
     
         public int ID { get; set; }
-        public string Name { get; set; }
-        public int EquipmentTypeID { get; set; }
-        public int CountInStock { get; set; }
-        public int CountAll { get; set; }
+        public string Number { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Deliveries> Deliveries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distributions> Distributions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentBuild> EquipmentBuild { get; set; }
-        public virtual EquipmentTypes EquipmentTypes { get; set; }
+
+        public override string ToString() => Number;
     }
 }

@@ -57,7 +57,7 @@ namespace EquipmentAccounting.Views
         {
             return Entities.Context.Equipments
                 .ToList()
-                .Where(x => $"{x.Name}{x.Type}{x.CountInStock}".ToLower().Contains(text));
+                .Where(x => $"{x.Name}{x.EquipmentTypes.Name}{x.CountInStock}".ToLower().Contains(text));
         }
 
         private void btnCreateExcelReport_Click(object sender, RoutedEventArgs e)
@@ -103,7 +103,7 @@ namespace EquipmentAccounting.Views
                 {
                     Equipments equipment = equipments[i];
                     worksheet.Cells[i + 3, 1].Value = equipment.Name;
-                    worksheet.Cells[i + 3, 2].Value = equipment.Type;
+                    worksheet.Cells[i + 3, 2].Value = equipment.EquipmentTypes.Name;
                     worksheet.Cells[i + 3, 3].Value = equipment.CountInStock;
                     worksheet.Cells[i + 3, 4].Value = equipment.CountAll;
                 }

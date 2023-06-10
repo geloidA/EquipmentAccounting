@@ -26,6 +26,8 @@
         <DataGrid Grid.Row="2" Margin="5" Name="dgDeliveries" IsReadOnly="True" 
                   AutoGenerateColumns="False" ColumnWidth="*" >
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер накладной" Binding="{Binding InvoiceNumber}" />
+                <DataGridTextColumn Header="Дата накладной" Binding="{Binding InvoiceDate, StringFormat=dd.MM.yyyy}" />
                 <DataGridTextColumn Header="Поставщик" Binding="{Binding Suppliers.Name}" />
                 <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
                 <DataGridTextColumn Header="Оборудование" Binding="{Binding Equipments.Name}" />

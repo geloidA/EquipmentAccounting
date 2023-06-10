@@ -12,20 +12,14 @@ namespace EquipmentAccounting.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class Distributions
+    public partial class EquipmentBuild
     {
-        public int ID { get; set; }
-        public int EquipmentID { get; set; }
-        public string Description { get; set; }
-        public int UserID { get; set; }
-        public int EquipmentCount { get; set; }
-        public System.DateTime Date { get; set; }
-        public int InvoiceNumber { get; set; }
-        public System.DateTime InvoiceDate { get; set; }
+        public int InventoryNumber { get; set; }
         public int UnitNumberID { get; set; }
+        public int EquipmentID { get; set; }
+        public System.DateTime Date { get; set; }
     
         public virtual Equipments Equipments { get; set; }
         public virtual UnitNumbers UnitNumbers { get; set; }
-        public virtual Users Users { get; set; }
     }
 }

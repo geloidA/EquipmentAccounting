@@ -28,6 +28,8 @@
         <DataGrid Grid.Row="2" Margin="5" Name="dgDistributions" IsReadOnly="True" 
                   AutoGenerateColumns="False" ColumnWidth="*"  >
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер накладной" Binding="{Binding InvoiceNumber}" />
+                <DataGridTextColumn Header="Дата накладной" Binding="{Binding InvoiceDate, StringFormat=dd.MM.yyyy}" />
                 <DataGridTextColumn Header="Инициатор" Binding="{Binding Users.FullName}" />
                 <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
                 <DataGridTextColumn Header="Описание" Binding="{Binding Description}" />

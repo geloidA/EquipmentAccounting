@@ -15,15 +15,19 @@ namespace EquipmentAccounting.Views
         public ObservableCollection<Equipments> Equipments { get; set; }
         public ObservableCollection<Suppliers> Suppliers { get; set; }
         public DateTime SelectedDeliveryTime { get; set; } = DateTime.Now;
+        public DateTime SelectedInvoiceDate { get; set; } = DateTime.Now;
         public Equipments SelectedEquipment { get; set; }
         public Suppliers SelectedSupplier { get; set; }
+        public ObservableCollection<EquipmentTypes> EquipmentTypeCollection { get; set; }
+        public int InvoiceNumber { get; set; }
 
         public DeliveryCreationWindow()
         {
             InitializeComponent();
+            EquipmentTypeCollection = new ObservableCollection<EquipmentTypes>(Entities.Context.EquipmentTypes);
             Equipments = new ObservableCollection<Equipments>
             {
-                new Equipments { CountInStock = 1 }
+                new Equipments { CountInStock = 1, EquipmentTypes = EquipmentTypeCollection.First() }
             };
             Suppliers = new ObservableCollection<Suppliers>(Entities.Context.Suppliers);
             DataContext = this;
@@ -31,7 +35,7 @@ namespace EquipmentAccounting.Views
 
         private void NewEquipment(object sender, RoutedEventArgs e)
         {
-            Equipments.Add(new Equipments { CountInStock = 1 });
+            Equipments.Add(new Equipments { CountInStock = 1, EquipmentTypes = EquipmentTypeCollection.First() });
         }
 
         private void RemoveEquipment(object sender, RoutedEventArgs e)
@@ -66,7 +70,9 @@ namespace EquipmentAccounting.Views
                     Date = SelectedDeliveryTime,
                     Equipments = possibleDuplicate ?? eq,
                     Count = eq.CountInStock,
-                    Suppliers = SelectedSupplier
+                    Suppliers = SelectedSupplier,
+                    InvoiceNumber = InvoiceNumber,
+                    InvoiceDate = SelectedInvoiceDate
                 });
             }
             Entities.Context.SaveChanges();
@@ -74,7 +80,7 @@ namespace EquipmentAccounting.Views
         }
 
         private bool IsEquipmentsValid => Equipments.All(x => x.CountInStock > 0
-                && !string.IsNullOrEmpty(x.Type)
+                && x.EquipmentTypes != null
                 && !string.IsNullOrEmpty(x.Name));
 
 

@@ -29,10 +29,13 @@ namespace EquipmentAccounting.DataBase
     
         public virtual DbSet<Deliveries> Deliveries { get; set; }
         public virtual DbSet<Distributions> Distributions { get; set; }
+        public virtual DbSet<EquipmentBuild> EquipmentBuild { get; set; }
         public virtual DbSet<Equipments> Equipments { get; set; }
+        public virtual DbSet<EquipmentTypes> EquipmentTypes { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<UnitNumbers> UnitNumbers { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }
 }

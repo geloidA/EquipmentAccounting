@@ -65,7 +65,7 @@ namespace EquipmentAccounting.Views
             Entities.Context.SaveChanges();
             foreach (var eq in Equipments)
             {
-                var possibleDuplicate = equips.FirstOrDefault(x => x.Name.ToLower() == eq.Name.ToLower());
+                var possibleDuplicate = equips.FirstOrDefault(x => x.Name.ToLower() == eq.Name.ToLower() && x.InventoryNumber == null);
                 if (possibleDuplicate != null)
                 {
                     possibleDuplicate.Count += eq.Count;

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         xmlns:help="clr-namespace:EquipmentAccounting.Help"
+        Icon="/Resources/icon.png"
         mc:Ignorable="d" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,7 +40,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <UniformGrid Columns="2" Grid.Row="3" Margin="5" >
-                <Button Content="Создать" Click="Save" Width="100"
+                <Button Content="Создать" Name="btnSave" Click="Save" Width="100"
                         HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <Button Content="Отмена" Click="Cancel" Width="100"
                         HorizontalAlignment="Right" VerticalAlignment="Center" />

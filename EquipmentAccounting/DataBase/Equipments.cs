@@ -13,7 +13,7 @@ namespace EquipmentAccounting.DataBase
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-
+    
     public partial class Equipments : INotifyPropertyChanged
     {
         private int count;
@@ -24,7 +24,7 @@ namespace EquipmentAccounting.DataBase
             this.Deliveries = new HashSet<Deliveries>();
             this.Distributions = new HashSet<Distributions>();
         }
-
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public int EquipmentTypeID { get; set; }
@@ -39,7 +39,7 @@ namespace EquipmentAccounting.DataBase
         }
         public int LocationID { get; set; }
         public Nullable<int> InventoryNumber { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deliveries> Deliveries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

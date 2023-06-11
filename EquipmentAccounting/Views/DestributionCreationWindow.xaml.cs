@@ -49,7 +49,7 @@ namespace EquipmentAccounting.Views
             {
                 item.Equipment.Count -= item.SelectedCount;
                 var nextEquipment = item.Equipment;
-                var possibleDublicate = SelectedLocationTo.Equipments.FirstOrDefault(x => x.Name == item.Equipment.Name);
+                var possibleDublicate = SelectedLocationTo.Equipments.FirstOrDefault(x => x.Name == item.Equipment.Name && x.InventoryNumber is null);
                 if (possibleDublicate != null)
                 {
                     possibleDublicate.Count += item.SelectedCount;
@@ -100,6 +100,7 @@ namespace EquipmentAccounting.Views
             Equipments.AddRange(Entities.Context.Equipments
                 .ToList()
                 .Where(x => x.Locations == SelectedLocationFrom)
+                .Where(x => x.InventoryNumber is null)
                 .Select(x => new EquipmentHelp { Equipment = x }));
         }
 

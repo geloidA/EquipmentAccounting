@@ -37,7 +37,6 @@
           </Key>
           <Property Name="InventoryNumber" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
-          <Property Name="EquipmentID" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Equipments">
@@ -315,7 +314,6 @@
           </Key>
           <Property Name="InventoryNumber" Type="Int32" Nullable="false" />
           <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Locations" Relationship="Self.FK_EquipmentBuild_Locations" FromRole="EquipmentBuild" ToRole="Locations" />
           <NavigationProperty Name="Equipments" Relationship="Self.FK_Equipments_EquipmentBuild" FromRole="EquipmentBuild" ToRole="Equipments" />
@@ -605,7 +603,6 @@
               <MappingFragment StoreEntitySet="EquipmentBuild">
                 <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>

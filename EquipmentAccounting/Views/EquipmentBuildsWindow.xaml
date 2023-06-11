@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EquipmentAccounting.Views"
         mc:Ignorable="d"
+        Icon="/Resources/icon.png"
         Title="Сборки" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,12 +19,18 @@
                     VerticalAlignment="Center" Margin="5 0 0 0">
             <TextBlock Text="Поиск:"/>
             <TextBox Width="150" Margin="10 0 0 0"
-                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                     TextChanged="TextBox_TextChanged"/>
         </StackPanel>
         <Button x:Name="btnCreateExcelReport" Content="Создать отчет" Grid.Row="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnCreateExcelReport_Click"/>
         <DataGrid Grid.Row="2" Margin="5" ItemsSource="{Binding EquipmentBuilds}" IsReadOnly="True" 
-                  AutoGenerateColumns="False" ColumnWidth="*"  >
+                  AutoGenerateColumns="False" ColumnWidth="*" SelectedItem="{Binding SelectedBuild}" >
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Расформировать" Click="DisbandBuild" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" />
                 <DataGridTextColumn Header="Дата сборки" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
@@ -32,7 +39,7 @@
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                     Margin="10 0 10 0" Grid.Row="3">
-            <Button Grid.Row="3" Content="Новое сборка" 
+            <Button Grid.Row="3" Content="Новая сборка" 
                 Margin="0 0 10 0" Click="AddNewEquipmentBuild"/>
         </StackPanel>
     </Grid>

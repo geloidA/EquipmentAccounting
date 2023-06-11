@@ -140,7 +140,7 @@ namespace EquipmentAccounting.Views
 
         private void btnShowEquipmentBuilds_Click(object sender, RoutedEventArgs e)
         {
-            new EquipmentBuildsWindow().ShowDialog();
+            new EquipmentBuildsWindow{ Owner = this }.ShowDialog();
         }
     }
 }

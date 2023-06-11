@@ -10,5 +10,11 @@ namespace EquipmentAccounting.Extensions
             foreach (var value in values)
                 collection.Add(value);
         }
+
+        public static void RemoveRange<T>(this ObservableCollection<T> collection, IEnumerable<T> values)
+        {
+            foreach (var value in values)
+                collection.Remove(value);
+        }
     }
 }

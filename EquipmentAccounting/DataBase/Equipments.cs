@@ -11,31 +11,47 @@ namespace EquipmentAccounting.DataBase
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Equipments
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+
+    public partial class Equipments : INotifyPropertyChanged
     {
+        private int count;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Equipments()
         {
             this.Deliveries = new HashSet<Deliveries>();
             this.Distributions = new HashSet<Distributions>();
-            this.EquipmentBuild = new HashSet<EquipmentBuild>();
         }
-    
+
         public int ID { get; set; }
         public string Name { get; set; }
         public int EquipmentTypeID { get; set; }
-        public int Count { get; set; }
+        public int Count 
+        { 
+            get => count; 
+            set
+            {
+                count = value;
+                OnPropertyChanged();
+            }
+        }
         public int LocationID { get; set; }
-    
+        public Nullable<int> InventoryNumber { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deliveries> Deliveries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distributions> Distributions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EquipmentBuild> EquipmentBuild { get; set; }
+        public virtual EquipmentBuild EquipmentBuild { get; set; }
         public virtual EquipmentTypes EquipmentTypes { get; set; }
         public virtual Locations Locations { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         internal Equipments Copy()
         {

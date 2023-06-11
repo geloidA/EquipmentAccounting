@@ -91,13 +91,13 @@
       <DependentUpon>DataModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\DataModel.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\DataModel.Designer.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Deliveries.cs">
@@ -132,8 +132,15 @@
     </Compile>
     <Compile Include="Extensions\ObservableCollection.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Help\DBHelp.cs" />
     <Compile Include="Help\EquipmentHelp.cs" />
+    <Compile Include="Help\EquipmentHelpEqualityComparer.cs" />
+    <Compile Include="Help\EquipmentsEqualityComparer.cs" />
+    <Compile Include="Help\InventoryNumberGenerator.cs" />
     <Compile Include="Help\VisibilityRoleConverter.cs" />
+    <Compile Include="Views\AddEditEquipmentBuildsWindow.xaml.cs">
+      <DependentUpon>AddEditEquipmentBuildsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeliveriesWindow.xaml.cs">
       <DependentUpon>DeliveriesWindow.xaml</DependentUpon>
     </Compile>
@@ -146,14 +153,14 @@
     <Compile Include="Views\DistributionsWindow.xaml.cs">
       <DependentUpon>DistributionsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EquipmentBuildsWindow.xaml.cs">
+      <DependentUpon>EquipmentBuildsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReturnEquipmentFromUnitWindow.xaml.cs">
-      <DependentUpon>ReturnEquipmentFromUnitWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SupplierCreationWindow.xaml.cs">
       <DependentUpon>SupplierCreationWindow.xaml</DependentUpon>
@@ -194,6 +201,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AddEditEquipmentBuildsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DeliveriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,15 +221,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EquipmentBuildsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReturnEquipmentFromUnitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,8 +254,8 @@
     </Content>
     <Content Include="DataBase\DataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataModel.cs</LastGenOutput>
       <DependentUpon>DataModel.edmx</DependentUpon>
+      <LastGenOutput>DataModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

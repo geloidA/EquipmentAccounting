@@ -75,13 +75,7 @@ namespace EquipmentAccounting.Views
                     InvoiceNumber = InvoiceNumber
                 });
                 if (item.Equipment.Count == 0)
-                {
-                    foreach (var delivery in item.Equipment.Deliveries)
-                        delivery.Equipments = nextEquipment;
-                    foreach (var distribution in item.Equipment.Distributions) 
-                        distribution.Equipments = nextEquipment;
-                    Entities.Context.Equipments.Remove(item.Equipment);
-                }
+                    DBHelp.RemoveEquipment(item.Equipment, nextEquipment);
             }
             Entities.Context.SaveChanges();
             DialogResult = true;

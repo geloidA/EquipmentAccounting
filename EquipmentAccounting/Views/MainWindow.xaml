@@ -41,12 +41,13 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Margin="10 0 10 0" Grid.Row="3">
-            <Button x:Name="btnShowDeliveries" Grid.Row="3" Content="Поставки" 
+                    Margin="5 0 10 0" Grid.Row="3">
+            <Button x:Name="btnShowDeliveries" Content="Поставки" 
                     Visibility="{Binding User, Converter={StaticResource visR}}"
                 Margin="0 0 10 0" Click="BtnShowDeliveries_Click"/>
-            <Button x:Name="btnShowDistributions" Grid.Row="3" Content="Распределения" 
+            <Button x:Name="btnShowDistributions" Content="Распределения" 
                 Margin="0 0 10 0" Click="BtnShowDistributions_Click"/>
+            <Button Name="btnShowEquipmentBuilds" Content="Сборки" Click="btnShowEquipmentBuilds_Click" />
         </StackPanel>        
     </Grid>
 </Window>

@@ -49,6 +49,7 @@
           <Property Name="EquipmentTypeID" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="InventoryNumber" Type="int" />
         </EntityType>
         <EntityType Name="EquipmentTypes">
           <Key>
@@ -160,18 +161,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EquipmentBuild_Equipments">
-          <End Role="Equipments" Type="Self.Equipments" Multiplicity="1" />
-          <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipments">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EquipmentBuild">
-              <PropertyRef Name="EquipmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EquipmentBuild_Locations">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="*" />
@@ -181,6 +170,18 @@
             </Principal>
             <Dependent Role="EquipmentBuild">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipments_EquipmentBuild">
+          <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentBuild">
+              <PropertyRef Name="InventoryNumber" />
+            </Principal>
+            <Dependent Role="Equipments">
+              <PropertyRef Name="InventoryNumber" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -251,13 +252,13 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Distributions" EntitySet="Distributions" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipmentBuild_Equipments" Association="Self.FK_EquipmentBuild_Equipments">
-            <End Role="Equipments" EntitySet="Equipments" />
-            <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
-          </AssociationSet>
           <AssociationSet Name="FK_EquipmentBuild_Locations" Association="Self.FK_EquipmentBuild_Locations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipments_EquipmentBuild" Association="Self.FK_Equipments_EquipmentBuild">
+            <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
+            <End Role="Equipments" EntitySet="Equipments" />
           </AssociationSet>
           <AssociationSet Name="FK_Equipments_EquipmentType" Association="Self.FK_Equipments_EquipmentType">
             <End Role="EquipmentTypes" EntitySet="EquipmentTypes" />
@@ -316,8 +317,8 @@
           <Property Name="LocationID" Type="Int32" Nullable="false" />
           <Property Name="EquipmentID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Equipments" Relationship="Self.FK_EquipmentBuild_Equipments" FromRole="EquipmentBuild" ToRole="Equipments" />
           <NavigationProperty Name="Locations" Relationship="Self.FK_EquipmentBuild_Locations" FromRole="EquipmentBuild" ToRole="Locations" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_Equipments_EquipmentBuild" FromRole="EquipmentBuild" ToRole="Equipments" />
         </EntityType>
         <EntityType Name="Equipments">
           <Key>
@@ -328,9 +329,10 @@
           <Property Name="EquipmentTypeID" Type="Int32" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="InventoryNumber" Type="Int32" />
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Equipments" FromRole="Equipments" ToRole="Deliveries" />
           <NavigationProperty Name="Distributions" Relationship="Self.FK_Distributions_Equipments" FromRole="Equipments" ToRole="Distributions" />
-          <NavigationProperty Name="EquipmentBuild" Relationship="Self.FK_EquipmentBuild_Equipments" FromRole="Equipments" ToRole="EquipmentBuild" />
+          <NavigationProperty Name="EquipmentBuild" Relationship="Self.FK_Equipments_EquipmentBuild" FromRole="Equipments" ToRole="EquipmentBuild" />
           <NavigationProperty Name="EquipmentTypes" Relationship="Self.FK_Equipments_EquipmentType" FromRole="Equipments" ToRole="EquipmentTypes" />
           <NavigationProperty Name="Locations" Relationship="Self.FK_Equipments_Locations" FromRole="Equipments" ToRole="Locations" />
         </EntityType>
@@ -452,18 +454,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EquipmentBuild_Equipments">
-          <End Role="Equipments" Type="Self.Equipments" Multiplicity="1" />
-          <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipments">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EquipmentBuild">
-              <PropertyRef Name="EquipmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EquipmentBuild_Locations">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="*" />
@@ -473,6 +463,18 @@
             </Principal>
             <Dependent Role="EquipmentBuild">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipments_EquipmentBuild">
+          <End Role="EquipmentBuild" Type="Self.EquipmentBuild" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentBuild">
+              <PropertyRef Name="InventoryNumber" />
+            </Principal>
+            <Dependent Role="Equipments">
+              <PropertyRef Name="InventoryNumber" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -543,13 +545,13 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Distributions" EntitySet="Distributions" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipmentBuild_Equipments" Association="Self.FK_EquipmentBuild_Equipments">
-            <End Role="Equipments" EntitySet="Equipments" />
-            <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
-          </AssociationSet>
           <AssociationSet Name="FK_EquipmentBuild_Locations" Association="Self.FK_EquipmentBuild_Locations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipments_EquipmentBuild" Association="Self.FK_Equipments_EquipmentBuild">
+            <End Role="EquipmentBuild" EntitySet="EquipmentBuild" />
+            <End Role="Equipments" EntitySet="Equipments" />
           </AssociationSet>
           <AssociationSet Name="FK_Equipments_EquipmentType" Association="Self.FK_Equipments_EquipmentType">
             <End Role="EquipmentTypes" EntitySet="EquipmentTypes" />
@@ -616,6 +618,7 @@
                 <ScalarProperty Name="EquipmentTypeID" ColumnName="EquipmentTypeID" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

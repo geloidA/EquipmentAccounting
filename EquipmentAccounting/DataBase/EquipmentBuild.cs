@@ -14,12 +14,19 @@ namespace EquipmentAccounting.DataBase
     
     public partial class EquipmentBuild
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EquipmentBuild()
+        {
+            this.Equipments = new HashSet<Equipments>();
+        }
+    
         public int InventoryNumber { get; set; }
         public int LocationID { get; set; }
         public int EquipmentID { get; set; }
         public System.DateTime Date { get; set; }
     
-        public virtual Equipments Equipments { get; set; }
         public virtual Locations Locations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Equipments> Equipments { get; set; }
     }
 }

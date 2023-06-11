@@ -45,6 +45,8 @@ namespace EquipmentAccounting.Views
         {
             base.OnClosed(e);
             Owner.Show();
+            (Owner as LoginWindow).txtBLogin.Clear();
+            (Owner as LoginWindow).txtBPassword.Clear();
         }
 
         public void UpdateEquipments()
@@ -134,6 +136,11 @@ namespace EquipmentAccounting.Views
         private void ComboBoxLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateEquipments();
+        }
+
+        private void btnShowEquipmentBuilds_Click(object sender, RoutedEventArgs e)
+        {
+            new EquipmentBuildsWindow().ShowDialog();
         }
     }
 }
